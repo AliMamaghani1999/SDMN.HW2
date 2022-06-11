@@ -1,1 +1,24 @@
+figure2:
+In this figure, I've tested several methods. First, I linked switches in the root and set in the nodes the GW  themselves. It works properly.
+sudo ip netns exec node1 ip route add 10.10.0.0/24 via 172.0.0.2
+sudo ip netns exec node2 ip route add 10.10.0.0/24 via 172.0.0.3  
+sudo ip netns exec node3 ip route add 172.0.0.0/24 via 10.10.0.2 
+sudo ip netns exec node4 ip route add 172.0.0.0/24 via 10.10.0.3 
+sudo ip link add veth2-br2 type veth peer name veth2-br1
+
+The second way was I create routes in the root namespace and route packets in the root namespace like what we had in the router namespace. Also, it works properly.
+sudo ip addr add 172.0.0.1/24 dev br1
+sudo ip addr add 172.0.0.2/24 dev br2
+sudo ip route add 10.10.0.0/24 via 172.0.0.1
+sudo ip route add 10.10.0.0/24 via 172.0.0.1
+Also we can use iptabel -P forwarding=1
+
+The third approach was to use the  iptabels and write two rules to have routes in the root namespace to route packets.  
+iptables -A FORWARD  -i br1  -o br2
+iptables -A FORWARD  -i br2  -o br1
+
+
+figure3:
+
+
 
