@@ -19,6 +19,15 @@ iptables -A FORWARD  -i br2  -o br1
 
 
 figure3:
+figure2:
+In this figure, we should build a route in the root namespace to connect VMs. 
+First, we should assign IP addresses to VMs, therefore, we can route packets 
+from VMs to the root namespace after that with routs in the root namespace 
+we can rout packets to VMs and the bridge in VMs . we have implemented this 
+strategy in the previous homework.
 
-
+in nodes:
+sudo ip route add 10.10.0.0/24 via root-ip
+in root:
+sudo ip route add 10.10.0.0/24 via vm-ip
 
